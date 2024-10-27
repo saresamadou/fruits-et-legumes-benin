@@ -11,6 +11,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static bj.fruitsetlegumes.api.infrastructure.jpa.FruitPmConverter.toDomain;
+import static bj.fruitsetlegumes.api.infrastructure.jpa.FruitPmConverter.toPm;
+
 @Repository
 @Profile("!test")
 public class JpaFruitsRepository implements FruitsCatalog {
@@ -31,20 +34,20 @@ public class JpaFruitsRepository implements FruitsCatalog {
 
     @Override
     public Fruit save(Fruit fruit) {
-        FruitPm fruitPm = springJpaRepository.save(new FruitPm(fruit.id(), fruit.name()));
-        return new Fruit(fruitPm.getId(), fruitPm.getName());
+        FruitPm fruitPm = springJpaRepository.save(toPm(fruit));
+        return toDomain(fruitPm);
     }
 
     @Override
     public Optional<Fruit> finfById(UUID id) {
         return springJpaRepository.findById(id)
-                .map(fruitPm -> new Fruit(fruitPm.getId(), fruitPm.getName()));
+                .map(FruitPmConverter::toDomain);
     }
 
     @Override
     public Optional<Fruit> update(Fruit fruit) {
         return Optional.of(springJpaRepository.save(new FruitPm(fruit.id(), fruit.name())))
-                .map(fruitPm -> new Fruit(fruitPm.getId(), fruitPm.getName()));
+                .map(FruitPmConverter::toDomain);
     }
 
     @Override
