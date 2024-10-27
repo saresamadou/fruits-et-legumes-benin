@@ -1,7 +1,7 @@
-package bj.fruitsetlegumes.api.infrastructure.jpa;
+package bj.fruitsetlegumes.api.infrastructure.secondary.repositories.jpa;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.infrastructure.jpa.persistencemodels.FruitPm;
+import bj.fruitsetlegumes.api.infrastructure.secondary.repositories.jpa.persistencemodels.FruitPm;
 
 public class FruitPmConverter {
 

@@ -1,4 +1,4 @@
-package bj.fruitsetlegumes.api.infrastructure.jpa.persistencemodels;
+package bj.fruitsetlegumes.api.infrastructure.secondary.repositories.jpa.persistencemodels;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,11 +1,11 @@
-package bj.fruitsetlegumes.api.rest;
+package bj.fruitsetlegumes.api.infrastructure.primary.rest;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.usecases.*;
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
 import bj.fruitsetlegumes.api.domain.usecases.command.UpdateFruitCommand;
-import bj.fruitsetlegumes.api.rest.request.CreateFruitRequest;
-import bj.fruitsetlegumes.api.rest.request.UpdateFruitRequest;
+import bj.fruitsetlegumes.api.infrastructure.primary.rest.request.CreateFruitRequest;
+import bj.fruitsetlegumes.api.infrastructure.primary.rest.request.UpdateFruitRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

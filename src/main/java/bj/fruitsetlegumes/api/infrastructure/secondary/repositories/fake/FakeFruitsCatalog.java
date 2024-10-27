@@ -1,4 +1,4 @@
-package bj.fruitsetlegumes.api.infrastructure.inmemory;
+package bj.fruitsetlegumes.api.infrastructure.secondary.repositories.fake;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
@@ -12,11 +12,11 @@ import java.util.UUID;
 
 @Repository
 @Profile("test")
-public class InMemoryFruitsCatalog implements FruitsCatalog {
+public class FakeFruitsCatalog implements FruitsCatalog {
 
     private final List<Fruit> fruits;
 
-    InMemoryFruitsCatalog() {
+    FakeFruitsCatalog() {
         fruits = new ArrayList<>();
     }
 
