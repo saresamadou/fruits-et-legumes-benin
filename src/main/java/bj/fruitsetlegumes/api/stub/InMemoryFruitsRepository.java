@@ -4,8 +4,13 @@ import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +20,10 @@ public class InMemoryFruitsRepository implements FruitsRepository {
 
     @Override
     public List<Fruit> findAll() {
+        return readFruits();
+    }
+
+    private List<Fruit> readFruits() {
         try (
             InputStream inputStream = getClass()
                 .getClassLoader()
@@ -23,7 +32,8 @@ public class InMemoryFruitsRepository implements FruitsRepository {
             if (inputStream == null) {
                 throw new RuntimeException("fruits.json not found");
             }
-            return jsonMapper.readValue(inputStream, new TypeReference<>() {});
+            return jsonMapper.readValue(inputStream, new TypeReference<>() {
+            });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -31,6 +41,33 @@ public class InMemoryFruitsRepository implements FruitsRepository {
 
     @Override
     public Fruit save(Fruit fruit) {
+        List<Fruit> fruits = readFruits();
+
+        fruits.add(fruit);
+
+        updateFruits(fruits);
+
         return fruit;
+    }
+
+    private void updateFruits(List<Fruit> fruits) {
+        try {
+            jsonMapper.writeValue(
+                    new File(Objects.requireNonNull(getClass().getClassLoader().getResource("fruits.json")).getFile()),
+                    fruits
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Fruit finfById(UUID id) {
+        List<Fruit> fruits = readFruits();
+
+        return fruits.stream()
+            .filter(fruit -> fruit.id().equals(id))
+            .findFirst()
+            .orElseThrow();
     }
 }
