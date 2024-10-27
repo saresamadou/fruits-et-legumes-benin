@@ -4,11 +4,14 @@ import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.usecases.*;
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
 import bj.fruitsetlegumes.api.domain.usecases.command.UpdateFruitCommand;
-import java.util.List;
-import java.util.UUID;
+import bj.fruitsetlegumes.api.rest.request.CreateFruitRequest;
+import bj.fruitsetlegumes.api.rest.request.UpdateFruitRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class FruitsRessource {
