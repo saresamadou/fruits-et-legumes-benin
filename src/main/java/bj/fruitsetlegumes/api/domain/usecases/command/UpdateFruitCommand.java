@@ -1,3 +1,5 @@
 package bj.fruitsetlegumes.api.domain.usecases.command;
 
-public record UpdateFruitCommand(String name) {}
+import java.util.UUID;
+
+public record UpdateFruitCommand(UUID id, String name) {}

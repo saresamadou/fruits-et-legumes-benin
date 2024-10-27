@@ -1,10 +1,7 @@
 package bj.fruitsetlegumes.api.rest;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.domain.usecases.CreateFruitUseCase;
-import bj.fruitsetlegumes.api.domain.usecases.DeleteFruitUseCase;
-import bj.fruitsetlegumes.api.domain.usecases.GetAllFruitsUsecase;
-import bj.fruitsetlegumes.api.domain.usecases.GetFruitUseCase;
+import bj.fruitsetlegumes.api.domain.usecases.*;
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
 import bj.fruitsetlegumes.api.domain.usecases.command.UpdateFruitCommand;
 import java.util.List;
@@ -21,16 +18,18 @@ public class FruitsRessource {
     private final GetFruitUseCase getFruitUseCase;
 
     private final DeleteFruitUseCase deleteFruitUseCase;
+    private final UpdateFruitUseCase updateFruitUseCase;
 
     public FruitsRessource(
-        GetAllFruitsUsecase getAllFruitsUsecase,
-        CreateFruitUseCase createFruitUseCase,
-        GetFruitUseCase getFruitUseCase,
-        DeleteFruitUseCase deleteFruitUseCase) {
+            GetAllFruitsUsecase getAllFruitsUsecase,
+            CreateFruitUseCase createFruitUseCase,
+            GetFruitUseCase getFruitUseCase,
+            DeleteFruitUseCase deleteFruitUseCase, UpdateFruitUseCase updateFruitUseCase) {
         this.getAllFruitsUsecase = getAllFruitsUsecase;
         this.createFruitUseCase = createFruitUseCase;
         this.getFruitUseCase = getFruitUseCase;
         this.deleteFruitUseCase = deleteFruitUseCase;
+        this.updateFruitUseCase = updateFruitUseCase;
     }
 
     @GetMapping("/fruits")
@@ -60,9 +59,8 @@ public class FruitsRessource {
         @PathVariable String id,
         @RequestBody UpdateFruitRequest request
     ) {
-        UpdateFruitCommand command = new UpdateFruitCommand(request.name());
-        return createFruitUseCase
-            .updateFruit(UUID.fromString(id), command)
+        UpdateFruitCommand command = new UpdateFruitCommand(UUID.fromString(id), request.name());
+        return updateFruitUseCase.updateFruit(command)
             .map(updatedFruit ->
                 new ResponseEntity<>(updatedFruit, HttpStatus.OK)
             )
