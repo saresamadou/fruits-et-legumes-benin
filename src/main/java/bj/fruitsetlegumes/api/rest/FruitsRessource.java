@@ -44,7 +44,8 @@ public class FruitsRessource {
 
    @GetMapping("/fruits/{id}")
     public ResponseEntity<Fruit> getFruit(@PathVariable String id) {
-        Fruit fruit = getFruitUseCase.getFruit(UUID.fromString(id));
-        return new ResponseEntity<>(fruit, HttpStatus.OK);
+        return getFruitUseCase.getFruit(UUID.fromString(id))
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

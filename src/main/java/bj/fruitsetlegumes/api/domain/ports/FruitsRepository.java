@@ -2,6 +2,7 @@ package bj.fruitsetlegumes.api.domain.ports;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface FruitsRepository {
@@ -9,5 +10,5 @@ public interface FruitsRepository {
 
     Fruit save(Fruit fruit);
 
-    Fruit finfById(UUID id);
+    Optional<Fruit> finfById(UUID id);
 }

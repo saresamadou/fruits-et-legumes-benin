@@ -1,10 +1,5 @@
 package bj.fruitsetlegumes.api;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -14,12 +9,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class FruitsRessourcesIT {
 
     @Autowired
     private MockMvc mockMvc;
+
 
     @Test
     void shouldReturnAllFruits() throws Exception {
@@ -60,6 +63,12 @@ public class FruitsRessourcesIT {
                 .andExpect(content().json("""
                         {"id": "%s", "name": "%s"}
                         """.formatted(fruit.id(), fruit.name())));
+    }
+
+    @Test
+    void shouldReturnFruitNotFoundWhenFruitDoesNotExists() throws Exception {
+        this.mockMvc.perform(get("/fruits/" + UUID.randomUUID()))
+                .andExpect(status().isNotFound());
     }
 
     private Fruit saveNewFruit() throws Exception {
