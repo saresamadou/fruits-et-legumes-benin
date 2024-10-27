@@ -1,7 +1,7 @@
 package bj.fruitsetlegumes.api;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,9 +24,21 @@ public class FruitsRessourcesIT {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private FruitsRepository fruitsRepository;
+
 
     @Test
     void shouldReturnAllFruits() throws Exception {
+
+        saveFruits(
+                List.of(
+                        new Fruit(UUID.fromString("a546cc47-28e1-48e9-b28e-088b90a72798"), "Mangue"),
+                        new Fruit(UUID.fromString("4ee87008-29d4-41f2-8355-dffcbf2fbcdf"), "Ananas"),
+                        new Fruit(UUID.fromString("2f11ba73-049e-4062-9f8c-96ed337b21db"), "Coco")
+                )
+        );
+
         String expectedFruitsJson =
                 """
                         [
@@ -71,17 +84,11 @@ public class FruitsRessourcesIT {
                 .andExpect(status().isNotFound());
     }
 
-    private Fruit saveNewFruit() throws Exception {
-        String responseContent = this.mockMvc.perform(
-                post("/fruits")
-                        .content("""
-                                {"name": "Pomme"}
-                                """)
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andReturn().getResponse().getContentAsString();
+    private Fruit saveNewFruit() {
+        return fruitsRepository.save(new Fruit(UUID.randomUUID(), "Pomme"));
+    }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(responseContent, Fruit.class);
-
+    private void saveFruits(List<Fruit> fruits)  {
+        fruits.forEach(fruit -> fruitsRepository.save(fruit));
     }
 }
