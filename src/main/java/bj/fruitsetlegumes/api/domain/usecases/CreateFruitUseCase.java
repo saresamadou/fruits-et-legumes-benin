@@ -3,10 +3,9 @@ package bj.fruitsetlegumes.api.domain.usecases;
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
-import bj.fruitsetlegumes.api.domain.usecases.command.UpdateFruitCommand;
-import java.util.Optional;
-import java.util.UUID;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class CreateFruitUseCase {
@@ -22,10 +21,4 @@ public class CreateFruitUseCase {
         return fruitsCatalog.save(fruit);
     }
 
-    public Optional<Fruit> updateFruit(UUID uuid, UpdateFruitCommand command) {
-        return fruitsCatalog
-            .finfById(uuid)
-            .map(foundFruit -> new Fruit(foundFruit.id(), command.name()))
-            .flatMap(fruitsCatalog::update);
-    }
 }
