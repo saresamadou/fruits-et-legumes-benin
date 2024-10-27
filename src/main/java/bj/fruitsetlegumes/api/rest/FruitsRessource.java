@@ -1,7 +1,7 @@
 package bj.fruitsetlegumes.api.rest;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.domain.usecases.CreateFruitCommand;
+import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
 import bj.fruitsetlegumes.api.domain.usecases.CreateFruitUseCase;
 import bj.fruitsetlegumes.api.domain.usecases.GetAllFruitsUsecase;
 import java.util.List;
