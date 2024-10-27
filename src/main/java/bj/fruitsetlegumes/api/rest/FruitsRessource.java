@@ -28,7 +28,7 @@ public class FruitsRessource {
 
     @PostMapping(value = "/fruits", produces = "application/json")
     public ResponseEntity<Fruit> createFruit(@RequestBody CreateFruitRequest request) {
-        CreateFruitCommand command = new CreateFruitCommand(request.getName());
+        CreateFruitCommand command = new CreateFruitCommand(request.name());
         Fruit createdFruit = createFruitUseCase.createFruit(command);
         return new ResponseEntity<>(createdFruit, HttpStatus.CREATED);
     }

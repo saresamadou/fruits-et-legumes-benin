@@ -16,7 +16,7 @@ public class CreateFruitUseCase {
     }
 
     public Fruit createFruit(CreateFruitCommand command) {
-        Fruit fruit = new Fruit(UUID.randomUUID(), command.getName());
+        Fruit fruit = new Fruit(UUID.randomUUID(), command.name());
         return fruitsRepository.save(fruit);
     }
 }
