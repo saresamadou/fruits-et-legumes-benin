@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
+import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.UnsupportedEncodingException;
@@ -28,7 +28,7 @@ public class FruitsRessourcesIT {
     private MockMvc mockMvc;
 
     @Autowired
-    private FruitsRepository fruitsRepository;
+    private FruitsCatalog fruitsCatalog;
 
     @Test
     void shouldReturnAllFruits() throws Exception {
@@ -169,10 +169,10 @@ public class FruitsRessourcesIT {
     }
 
     private Fruit saveNewFruit() {
-        return fruitsRepository.save(new Fruit(UUID.randomUUID(), "Pomme"));
+        return fruitsCatalog.save(new Fruit(UUID.randomUUID(), "Pomme"));
     }
 
     private void saveFruits(List<Fruit> fruits) {
-        fruits.forEach(fruit -> fruitsRepository.save(fruit));
+        fruits.forEach(fruit -> fruitsCatalog.save(fruit));
     }
 }

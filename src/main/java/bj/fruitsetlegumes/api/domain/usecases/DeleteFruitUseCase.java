@@ -1,6 +1,6 @@
 package bj.fruitsetlegumes.api.domain.usecases;
 
-import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
+import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -8,15 +8,15 @@ import java.util.UUID;
 @Component
 public class DeleteFruitUseCase {
 
-    private final FruitsRepository fruitsRepository;
+    private final FruitsCatalog fruitsCatalog;
 
-    public DeleteFruitUseCase(FruitsRepository fruitsRepository) {
-        this.fruitsRepository = fruitsRepository;
+    public DeleteFruitUseCase(FruitsCatalog fruitsCatalog) {
+        this.fruitsCatalog = fruitsCatalog;
     }
 
     public void deleteFruit(UUID id) {
-        fruitsRepository
+        fruitsCatalog
             .finfById(id)
-            .ifPresent(fruitsRepository::delete);
+            .ifPresent(fruitsCatalog::delete);
     }
 }

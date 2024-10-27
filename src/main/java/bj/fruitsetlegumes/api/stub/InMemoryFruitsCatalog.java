@@ -1,7 +1,7 @@
 package bj.fruitsetlegumes.api.stub;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
+import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,11 +9,11 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InMemoryFruitsRepository implements FruitsRepository {
+public class InMemoryFruitsCatalog implements FruitsCatalog {
 
     private final List<Fruit> fruits;
 
-    InMemoryFruitsRepository() {
+    InMemoryFruitsCatalog() {
         fruits = new ArrayList<>();
     }
 

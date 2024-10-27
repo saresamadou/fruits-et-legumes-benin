@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface FruitsRepository {
+public interface FruitsCatalog {
     List<Fruit> findAll();
 
     Fruit save(Fruit fruit);

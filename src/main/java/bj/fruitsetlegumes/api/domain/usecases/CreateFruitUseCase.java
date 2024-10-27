@@ -1,7 +1,7 @@
 package bj.fruitsetlegumes.api.domain.usecases;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
+import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
 import bj.fruitsetlegumes.api.domain.usecases.command.UpdateFruitCommand;
 import java.util.Optional;
@@ -11,21 +11,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateFruitUseCase {
 
-    private final FruitsRepository fruitsRepository;
+    private final FruitsCatalog fruitsCatalog;
 
-    public CreateFruitUseCase(FruitsRepository fruitsRepository) {
-        this.fruitsRepository = fruitsRepository;
+    public CreateFruitUseCase(FruitsCatalog fruitsCatalog) {
+        this.fruitsCatalog = fruitsCatalog;
     }
 
     public Fruit createFruit(CreateFruitCommand command) {
         Fruit fruit = new Fruit(UUID.randomUUID(), command.name());
-        return fruitsRepository.save(fruit);
+        return fruitsCatalog.save(fruit);
     }
 
     public Optional<Fruit> updateFruit(UUID uuid, UpdateFruitCommand command) {
-        return fruitsRepository
+        return fruitsCatalog
             .finfById(uuid)
             .map(foundFruit -> new Fruit(foundFruit.id(), command.name()))
-            .flatMap(fruitsRepository::update);
+            .flatMap(fruitsCatalog::update);
     }
 }

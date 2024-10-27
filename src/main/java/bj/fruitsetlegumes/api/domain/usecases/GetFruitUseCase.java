@@ -1,7 +1,7 @@
 package bj.fruitsetlegumes.api.domain.usecases;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
+import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class GetFruitUseCase {
 
-    private final FruitsRepository fruitsRepository;
+    private final FruitsCatalog fruitsCatalog;
 
-    public GetFruitUseCase(FruitsRepository fruitsRepository) {
-        this.fruitsRepository = fruitsRepository;
+    public GetFruitUseCase(FruitsCatalog fruitsCatalog) {
+        this.fruitsCatalog = fruitsCatalog;
     }
 
     public Optional<Fruit> getFruit(UUID id) {
-        return fruitsRepository.finfById(id);
+        return fruitsCatalog.finfById(id);
     }
 }
