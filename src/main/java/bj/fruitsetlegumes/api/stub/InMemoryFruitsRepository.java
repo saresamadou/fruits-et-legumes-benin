@@ -39,10 +39,10 @@ public class InMemoryFruitsRepository implements FruitsRepository {
     @Override
     public Optional<Fruit> update(Fruit fruit) {
         Fruit fruitToUpdate = fruits
-                .stream()
-                .filter(f -> f.id().equals(fruit.id()))
-                .findFirst()
-                .orElseThrow();
+            .stream()
+            .filter(f -> f.id().equals(fruit.id()))
+            .findFirst()
+            .orElseThrow();
 
         Fruit updatedFruit = new Fruit(fruitToUpdate.id(), fruit.name());
         fruits.remove(fruitToUpdate);

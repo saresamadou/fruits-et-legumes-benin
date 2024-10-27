@@ -5,10 +5,9 @@ import bj.fruitsetlegumes.api.domain.usecases.CreateFruitUseCase;
 import bj.fruitsetlegumes.api.domain.usecases.GetAllFruitsUsecase;
 import bj.fruitsetlegumes.api.domain.usecases.GetFruitUseCase;
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
+import bj.fruitsetlegumes.api.domain.usecases.command.UpdateFruitCommand;
 import java.util.List;
 import java.util.UUID;
-
-import bj.fruitsetlegumes.api.domain.usecases.command.UpdateFruitCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,11 +52,16 @@ public class FruitsRessource {
     }
 
     @PutMapping("/fruits/{id}")
-    public ResponseEntity<Fruit> updateFruit(@PathVariable String id, @RequestBody UpdateFruitRequest request) {
+    public ResponseEntity<Fruit> updateFruit(
+        @PathVariable String id,
+        @RequestBody UpdateFruitRequest request
+    ) {
         UpdateFruitCommand command = new UpdateFruitCommand(request.name());
         return createFruitUseCase
             .updateFruit(UUID.fromString(id), command)
-            .map(updatedFruit -> new ResponseEntity<>(updatedFruit, HttpStatus.OK))
+            .map(updatedFruit ->
+                new ResponseEntity<>(updatedFruit, HttpStatus.OK)
+            )
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

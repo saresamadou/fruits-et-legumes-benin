@@ -9,7 +9,6 @@ import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
@@ -103,7 +102,8 @@ public class FruitsRessourcesIT {
     }
 
     @Test
-    void shouldReturnFruitNotFoundWhenFruitDoesNotExists() throws Exception {
+    void shouldReturnFruitNotFoundWhenFruitToGetDoesNotExists()
+        throws Exception {
         this.mockMvc.perform(get("/fruits/" + UUID.randomUUID())).andExpect(
                 status().isNotFound()
             );
@@ -134,7 +134,22 @@ public class FruitsRessourcesIT {
         assertThat(updatedFruit.name()).isEqualTo("Goyave");
     }
 
-    private Fruit getUpdatedFruit(MockHttpServletResponse response) throws JsonProcessingException, UnsupportedEncodingException {
+    @Test
+    void shouldReturnFruitNotFoundWhenFruitToUpdateDoesNotExists()
+        throws Exception {
+        this.mockMvc.perform(
+                put("/fruits/" + UUID.randomUUID())
+                    .content(
+                        """
+                        {"name": "Goyave"}
+                        """
+                    )
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andExpect(status().isNotFound());
+    }
+
+    private Fruit getUpdatedFruit(MockHttpServletResponse response)
+        throws JsonProcessingException, UnsupportedEncodingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(
             response.getContentAsString(),

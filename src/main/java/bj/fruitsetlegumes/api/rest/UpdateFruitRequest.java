@@ -1,4 +1,3 @@
 package bj.fruitsetlegumes.api.rest;
 
-public record UpdateFruitRequest(String name) {
-}
+public record UpdateFruitRequest(String name) {}
