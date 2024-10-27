@@ -1,12 +1,16 @@
 package bj.fruitsetlegumes.api;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -75,8 +80,7 @@ public class FruitsRessourcesIT {
                 post("/fruits")
                     .content(newFruitJson)
                     .contentType(MediaType.APPLICATION_JSON)
-            )// then
-            .andExpect(status().isCreated());
+            ).andExpect(status().isCreated()); // then
     }
 
     @Test
@@ -103,6 +107,39 @@ public class FruitsRessourcesIT {
         this.mockMvc.perform(get("/fruits/" + UUID.randomUUID())).andExpect(
                 status().isNotFound()
             );
+    }
+
+    @Test
+    void shouldUpdateAFruit() throws Exception {
+        // given
+        Fruit fruit = saveNewFruit();
+
+        // when
+        var response =
+            this.mockMvc.perform(
+                    put("/fruits/" + fruit.id())
+                        .content(
+                            """
+                            {"name": "Goyave"}
+                            """
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        Fruit updatedFruit = getUpdatedFruit(response);
+        assertThat(updatedFruit.name()).isEqualTo("Goyave");
+    }
+
+    private Fruit getUpdatedFruit(MockHttpServletResponse response) throws JsonProcessingException, UnsupportedEncodingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(
+            response.getContentAsString(),
+            Fruit.class
+        );
     }
 
     private Fruit saveNewFruit() {

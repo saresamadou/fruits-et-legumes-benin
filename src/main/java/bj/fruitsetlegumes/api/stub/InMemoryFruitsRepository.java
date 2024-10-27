@@ -35,4 +35,19 @@ public class InMemoryFruitsRepository implements FruitsRepository {
             .filter(fruit -> fruit.id().equals(id))
             .findFirst();
     }
+
+    @Override
+    public Optional<Fruit> update(Fruit fruit) {
+        Fruit fruitToUpdate = fruits
+                .stream()
+                .filter(f -> f.id().equals(fruit.id()))
+                .findFirst()
+                .orElseThrow();
+
+        Fruit updatedFruit = new Fruit(fruitToUpdate.id(), fruit.name());
+        fruits.remove(fruitToUpdate);
+        fruits.add(updatedFruit);
+
+        return Optional.of(updatedFruit);
+    }
 }

@@ -11,4 +11,6 @@ public interface FruitsRepository {
     Fruit save(Fruit fruit);
 
     Optional<Fruit> finfById(UUID id);
+
+    Optional<Fruit> update(Fruit fruit);
 }
