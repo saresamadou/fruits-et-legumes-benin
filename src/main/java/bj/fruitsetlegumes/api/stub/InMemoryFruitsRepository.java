@@ -4,10 +4,9 @@ import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.springframework.stereotype.Component;
-
 import java.io.InputStream;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InMemoryFruitsRepository implements FruitsRepository {
@@ -16,7 +15,11 @@ public class InMemoryFruitsRepository implements FruitsRepository {
 
     @Override
     public List<Fruit> findAll() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("fruits.json")) {
+        try (
+            InputStream inputStream = getClass()
+                .getClassLoader()
+                .getResourceAsStream("fruits.json")
+        ) {
             if (inputStream == null) {
                 throw new RuntimeException("fruits.json not found");
             }
