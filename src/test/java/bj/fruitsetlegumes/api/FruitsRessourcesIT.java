@@ -148,6 +148,17 @@ public class FruitsRessourcesIT {
             ).andExpect(status().isNotFound());
     }
 
+    @Test
+    void shouldDeleteAFruit() throws Exception {
+        // given
+        Fruit fruit = saveNewFruit();
+
+        // when
+        this.mockMvc.perform(delete("/fruits/" + fruit.id()))
+            // then
+            .andExpect(status().isNoContent());
+    }
+
     private Fruit getUpdatedFruit(MockHttpServletResponse response)
         throws JsonProcessingException, UnsupportedEncodingException {
         ObjectMapper objectMapper = new ObjectMapper();

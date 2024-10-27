@@ -13,4 +13,6 @@ public interface FruitsRepository {
     Optional<Fruit> finfById(UUID id);
 
     Optional<Fruit> update(Fruit fruit);
+
+    void delete(Fruit fruit);
 }

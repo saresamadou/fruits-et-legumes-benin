@@ -50,4 +50,9 @@ public class InMemoryFruitsRepository implements FruitsRepository {
 
         return Optional.of(updatedFruit);
     }
+
+    @Override
+    public void delete(Fruit fruit) {
+        fruits.remove(fruit);
+    }
 }

@@ -2,6 +2,7 @@ package bj.fruitsetlegumes.api.rest;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.usecases.CreateFruitUseCase;
+import bj.fruitsetlegumes.api.domain.usecases.DeleteFruitUseCase;
 import bj.fruitsetlegumes.api.domain.usecases.GetAllFruitsUsecase;
 import bj.fruitsetlegumes.api.domain.usecases.GetFruitUseCase;
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
@@ -19,14 +20,17 @@ public class FruitsRessource {
     private final CreateFruitUseCase createFruitUseCase;
     private final GetFruitUseCase getFruitUseCase;
 
+    private final DeleteFruitUseCase deleteFruitUseCase;
+
     public FruitsRessource(
         GetAllFruitsUsecase getAllFruitsUsecase,
         CreateFruitUseCase createFruitUseCase,
-        GetFruitUseCase getFruitUseCase
-    ) {
+        GetFruitUseCase getFruitUseCase,
+        DeleteFruitUseCase deleteFruitUseCase) {
         this.getAllFruitsUsecase = getAllFruitsUsecase;
         this.createFruitUseCase = createFruitUseCase;
         this.getFruitUseCase = getFruitUseCase;
+        this.deleteFruitUseCase = deleteFruitUseCase;
     }
 
     @GetMapping("/fruits")
@@ -63,5 +67,11 @@ public class FruitsRessource {
                 new ResponseEntity<>(updatedFruit, HttpStatus.OK)
             )
             .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/fruits/{id}")
+    public ResponseEntity<Void> deleteFruit(@PathVariable String id) {
+        deleteFruitUseCase.deleteFruit(UUID.fromString(id));
+        return ResponseEntity.noContent().build();
     }
 }
