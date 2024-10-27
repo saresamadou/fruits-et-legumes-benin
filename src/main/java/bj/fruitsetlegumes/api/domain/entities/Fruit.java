@@ -1,4 +1,6 @@
 package bj.fruitsetlegumes.api.domain.entities;
 
-public record Fruit(Integer id, String name) {
+import java.util.UUID;
+
+public record Fruit(UUID id, String name) {
 }

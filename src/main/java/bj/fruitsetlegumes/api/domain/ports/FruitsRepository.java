@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface FruitsRepository {
     List<Fruit> findAll();
+
+    Fruit save(Fruit fruit);
 }

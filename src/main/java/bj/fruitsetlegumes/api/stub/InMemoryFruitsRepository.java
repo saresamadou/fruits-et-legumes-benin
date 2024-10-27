@@ -25,4 +25,9 @@ public class InMemoryFruitsRepository implements FruitsRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Fruit save(Fruit fruit) {
+        return fruit;
+    }
 }
