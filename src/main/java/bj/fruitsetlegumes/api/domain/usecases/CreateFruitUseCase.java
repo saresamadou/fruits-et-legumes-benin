@@ -2,9 +2,8 @@ package bj.fruitsetlegumes.api.domain.usecases;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsRepository;
-import java.util.UUID;
-
 import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,13 +1,12 @@
 package bj.fruitsetlegumes.api.rest;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
-import bj.fruitsetlegumes.api.domain.usecases.GetFruitUseCase;
-import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
 import bj.fruitsetlegumes.api.domain.usecases.CreateFruitUseCase;
 import bj.fruitsetlegumes.api.domain.usecases.GetAllFruitsUsecase;
+import bj.fruitsetlegumes.api.domain.usecases.GetFruitUseCase;
+import bj.fruitsetlegumes.api.domain.usecases.command.CreateFruitCommand;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,8 @@ public class FruitsRessource {
     public FruitsRessource(
         GetAllFruitsUsecase getAllFruitsUsecase,
         CreateFruitUseCase createFruitUseCase,
-        GetFruitUseCase getFruitUseCase) {
+        GetFruitUseCase getFruitUseCase
+    ) {
         this.getAllFruitsUsecase = getAllFruitsUsecase;
         this.createFruitUseCase = createFruitUseCase;
         this.getFruitUseCase = getFruitUseCase;
@@ -42,10 +42,11 @@ public class FruitsRessource {
         return new ResponseEntity<>(createdFruit, HttpStatus.CREATED);
     }
 
-   @GetMapping("/fruits/{id}")
+    @GetMapping("/fruits/{id}")
     public ResponseEntity<Fruit> getFruit(@PathVariable String id) {
-        return getFruitUseCase.getFruit(UUID.fromString(id))
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return getFruitUseCase
+            .getFruit(UUID.fromString(id))
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
