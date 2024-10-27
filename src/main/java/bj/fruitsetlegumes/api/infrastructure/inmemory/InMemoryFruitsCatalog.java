@@ -1,14 +1,17 @@
-package bj.fruitsetlegumes.api.stub;
+package bj.fruitsetlegumes.api.infrastructure.inmemory;
 
 import bj.fruitsetlegumes.api.domain.entities.Fruit;
 import bj.fruitsetlegumes.api.domain.ports.FruitsCatalog;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.stereotype.Component;
 
-@Component
+@Repository
+@Profile("test")
 public class InMemoryFruitsCatalog implements FruitsCatalog {
 
     private final List<Fruit> fruits;
